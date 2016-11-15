@@ -7,14 +7,20 @@
       .module('auth')
       .controller('SignInController', SignInController);
 
-    function SignInController () {
+    function SignInController (signInFactory) {
       var vm = this;
 
-      vm.username = '';
       vm.email = '';
       vm.password = '';
+      
+      vm.signIn = signIn;
 
+      function signIn() {
+        signInFactory.signIn(vm.email, vm.password)
+          .then(function (response) {
 
+          });
+      }      
     }
   }
 )();

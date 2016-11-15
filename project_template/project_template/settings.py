@@ -44,10 +44,13 @@ INSTALLED_APPS = [
 
   # 3rd party apps
   'rest_framework',
+  'rest_framework.authtoken',
 
   'allauth',
   'allauth.account',
   'allauth.socialaccount',
+  'rest_auth',
+  'rest_auth.registration',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -161,3 +164,11 @@ REST_FRAMEWORK = {
     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
   ]
 }
+
+# Authentication Settings
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_USERNAME_REQUIRED = False
+
+SITE_ID = 1

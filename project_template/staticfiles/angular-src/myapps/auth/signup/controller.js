@@ -7,15 +7,21 @@
       .module('auth')
       .controller('SignUpController', SignUpController);
 
-    function SignUpController () {
+    function SignUpController (signUpFactory) {
       var vm = this;
 
-      vm.username = '';
       vm.email = '';
       vm.password1 = '';
       vm.password2 = '';
 
+      vm.signUp = signUp;
 
+      function signUp() {
+        signUpFactory.signUp(vm.email, vm.password1, vm.password2)
+          .then(function (response) {
+
+          });
+      }
 
     }
   }

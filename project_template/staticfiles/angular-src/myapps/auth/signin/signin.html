@@ -4,13 +4,6 @@
 
     <div layout="row"  layout-align="center">
       <md-input-container>
-        <label>Username</label>
-        <input name="username" ng-model="vm.username" required>
-      </md-input-container>
-    </div>
-
-    <div layout="row"  layout-align="center">
-      <md-input-container>
         <label>Email</label>
         <input name="email" ng-model="vm.email" type="email" required>
       </md-input-container>
@@ -21,6 +14,10 @@
         <label>Password</label>
         <input name="password" ng-model="vm.password" type="password" required>
       </md-input-container>
+    </div>
+
+    <div layout="row"  layout-align="center">
+      <md-button class="md-raised md-primary" ng-click="vm.signIn()">Sign In</md-button>
     </div>
 
   </div>

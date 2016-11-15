@@ -4,13 +4,6 @@
 
     <div layout="row"  layout-align="center">
       <md-input-container>
-        <label>Username</label>
-        <input name="username" ng-model="vm.username" required>
-      </md-input-container>
-    </div>
-
-    <div layout="row"  layout-align="center">
-      <md-input-container>
         <label>Email</label>
         <input name="email" ng-model="vm.email" type="email" required>
       </md-input-container>
@@ -28,6 +21,10 @@
         <label>Confirm Password</label>
         <input name="password2" ng-model="vm.password2" type="password" required>
       </md-input-container>
+    </div>
+
+    <div layout="row"  layout-align="center">
+      <md-button class="md-raised md-primary" ng-click="vm.signUp()">Reset</md-button>
     </div>
 
   </div>
