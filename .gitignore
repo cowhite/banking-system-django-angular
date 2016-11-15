@@ -7,7 +7,6 @@
 local_settings.py
 /static
 fixtures.json
-/static
 /staticfiles/media
 /media
 media
@@ -18,3 +17,4 @@ dist
 .tmp
 .sass-cache
 tmp
+.idea/

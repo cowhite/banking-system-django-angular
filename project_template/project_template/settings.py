@@ -31,48 +31,61 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sites',
+  'django.contrib.admin',
+  'django.contrib.auth',
+  'django.contrib.contenttypes',
+  'django.contrib.sessions',
+  'django.contrib.messages',
+  'django.contrib.staticfiles',
+  'django.contrib.sites',
 
-    # custom apps
+  # custom apps
+  'accounts',
 
-    # 3rd party apps
-    'rest_framework',
+  # 3rd party apps
+  'rest_framework',
+
+  'allauth',
+  'allauth.account',
+  'allauth.socialaccount',
 ]
 
 MIDDLEWARE_CLASSES = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+  'django.middleware.security.SecurityMiddleware',
+  'django.contrib.sessions.middleware.SessionMiddleware',
+  'django.middleware.common.CommonMiddleware',
+  'django.middleware.csrf.CsrfViewMiddleware',
+  'django.contrib.auth.middleware.AuthenticationMiddleware',
+  'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+  'django.contrib.messages.middleware.MessageMiddleware',
+  'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'project_template.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
+  {
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'DIRS': ['templates'],
+    'APP_DIRS': True,
+    'OPTIONS': {
+      'context_processors': [
+        'django.template.context_processors.debug',
+        'django.template.context_processors.request',
+        'django.contrib.auth.context_processors.auth',
+        'django.contrib.messages.context_processors.messages',
+      ],
     },
+  },
 ]
+
+AUTHENTICATION_BACKENDS = (
+  # Needed to login by username in Django admin, regardless of `allauth`
+  'django.contrib.auth.backends.ModelBackend',
+
+  # `allauth` specific authentication methods, such as login by e-mail
+  'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 WSGI_APPLICATION = 'project_template.wsgi.application'
 
@@ -81,10 +94,14 @@ WSGI_APPLICATION = 'project_template.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+  'default': {
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'NAME': 'cowhitebanking',
+    'USER': 'cowhite',
+    'PASSWORD': 'srinath@cowhite.com',
+    'HOST': 'localhost',
+    'PORT': '',
+  }
 }
 
 
@@ -92,18 +109,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+  {
+    'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+  },
+  {
+    'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+  },
+  {
+    'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+  },
+  {
+    'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+  },
 ]
 
 
@@ -128,19 +145,19 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL[1:])
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "staticfiles"),
+  os.path.join(BASE_DIR, "staticfiles"),
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles/media')
 if not DEBUG:
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
+  MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
 MEDIA_URL = '/static/media/'
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+  # Use Django's standard `django.contrib.auth` permissions,
+  # or allow read-only access for unauthenticated users.
+  'DEFAULT_PERMISSION_CLASSES': [
+    'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+  ]
 }
