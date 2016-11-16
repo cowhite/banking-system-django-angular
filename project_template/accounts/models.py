@@ -72,7 +72,7 @@ class BankAccount(models.Model):
     for i in range(16):
       rnd = ''.join(random.choice(string.digits) for _ in range(2))
       self._raw_grid[key] = rnd
-      self.grid[key] = make_password(rnd)
+      self.set_grid_single(rnd, key)
       key = chr(ord(key) + 1)
 
   def set_password3d(self, raw_password):
@@ -84,9 +84,20 @@ class BankAccount(models.Model):
       self.set_password3d(raw_password)
 
       self._raw_password3d = None
-      self.save(update_fields=["password"])
+      self.save(update_fields=["password3d"])
 
-    return check_password(raw_password, self.password, setter)
+    return check_password(raw_password, self.password3d, setter)
+
+  def set_grid_single(self, raw_code, char):
+    self.grid[char] = make_password(raw_code)
+
+  def check_grid_single(self, raw_code, char):
+    def setter(raw_password, key=char):
+      self.set_grid_single(raw_password, key)
+
+      self.save(update_fields=["grid"])
+
+    return check_password(raw_code, self.grid[char], setter)
 
   def get_raw_password3d(self):
     return self._raw_password3d
