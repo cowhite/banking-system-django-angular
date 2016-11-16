@@ -11,6 +11,9 @@ from django.db.models import Max
 import string
 import random
 
+from django.contrib.auth.models import User
+from django.db.models import signals
+
 # Create your models here.
 
 
@@ -67,3 +70,11 @@ class BankAccount(models.Model):
       self.save(update_fields=["password"])
 
     return check_password(raw_password, self.password, setter)
+
+
+def create_bank_account(sender, instance, created, **kwargs):
+    if created:
+      acc = BankAccount(user=instance)
+      acc.save()
+
+signals.post_save.connect(create_bank_account, sender=User)
