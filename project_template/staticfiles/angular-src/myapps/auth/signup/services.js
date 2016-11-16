@@ -13,13 +13,14 @@
 
     factory.signUp = signUp;
 
-    function signUp(email, password1, password2) {
+    function signUp(email, mobile_num, password1, password2) {
       var deferred = $q.defer();
       $http({
         url     : '/rest-auth/registration/',
         method  : 'POST',
         data    : {
           'email'     : email,
+          'mobile_num': mobile_num,
           'password1' : password1,
           'password2' : password2
         }

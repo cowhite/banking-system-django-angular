@@ -44,9 +44,11 @@ INSTALLED_APPS = [
 
   # custom apps
   'accounts',
+  'transactions',
 
   # 3rd party apps
   'djcelery',
+  'phonenumber_field',
 
   'rest_framework',
   'rest_framework.authtoken',
@@ -186,3 +188,6 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_USERNAME_REQUIRED = False
 
 SITE_ID = 1
+
+# Custom Variables
+BANK_ACCOUNT_NUMBER_SEED = '500000000000'

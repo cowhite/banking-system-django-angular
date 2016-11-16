@@ -1,14 +1,17 @@
 amqp==1.4.9
 anyjson==0.3.3
+Babel==2.3.4
 billiard==3.3.0.23
 celery==3.1.0
 Django==1.9.6
 django-allauth==0.28.0
 django-celery==3.1.17
+django-phonenumber-field==1.1.0
 django-rest-auth==0.8.2
 djangorestframework==3.5.3
 kombu==3.0.37
 oauthlib==2.0.0
+phonenumberslite==7.7.4
 Pillow==3.4.2
 pkg-resources==0.0.0
 psycopg2==2.6.2

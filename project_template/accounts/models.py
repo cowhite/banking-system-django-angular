@@ -7,6 +7,7 @@ from django.db import models
 
 
 from django.db.models import Max
+from django.utils import timezone
 
 import string
 import random
@@ -14,6 +15,10 @@ import random
 from django.contrib.auth.models import User
 from django.db.models import signals
 import json
+
+from phonenumber_field.modelfields import PhoneNumberField
+
+from project_template.settings import BANK_ACCOUNT_NUMBER_SEED
 from .tasks import create_pdf
 # Create your models here.
 
@@ -21,36 +26,22 @@ from .tasks import create_pdf
 class BankAccount(models.Model):
   user = models.ForeignKey(User)
   number = models.CharField(max_length=12, unique=True)
+  mobile_num = PhoneNumberField()
+  balance = models.DecimalField(max_digits=20, decimal_places=2, default=0)
   password3d = models.CharField(max_length=128)
   grid = JSONField()
   cvv = models.CharField(max_length=3)
 
+  created_at = models.DateTimeField(default=timezone.now)
+  updated_at = models.DateTimeField(default=timezone.now)
+
   def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
+           update_fields=None):
     if self.pk is None:
-      #Account Number generation
-      prev_acc_num = BankAccount.objects.aggregate(max=Max('number'))['max']
-      if prev_acc_num == '':
-        prev_acc_num = 0
-      self.number = str(int(prev_acc_num) + 1).zfill(12)
+      self.initialize_account()
 
-      #3dpassword generation
-      self._raw_password3d = ''.join(random.choice(string.digits) for _ in range(6))
-      self.set_password3d(self._raw_password3d)
-
-      #CVV Generation
-      self.cvv = ''.join(random.choice(string.digits) for _ in range(3))
-
-      #grid generation
-      key = 'A'
-      self._raw_grid = {}
-      self.grid = {}
-
-      for i in range(16):
-        rnd = ''.join(random.choice(string.digits) for _ in range(2))
-        self._raw_grid[key] = rnd
-        self.grid[key] = make_password(rnd)
-        key = chr(ord(key) + 1)
+    # Update timestamp
+    self.updated_at = timezone.now()
 
     return super(BankAccount, self).save(
       force_insert=force_insert,
@@ -58,6 +49,31 @@ class BankAccount(models.Model):
       using=using,
       update_fields=update_fields
     )
+
+  def initialize_account(self):
+    # Account Number generation
+    prev_acc_num = BankAccount.objects.aggregate(max=Max('number'))['max']
+    if prev_acc_num == '':
+      prev_acc_num = BANK_ACCOUNT_NUMBER_SEED
+    self.number = str(int(prev_acc_num) + 1).zfill(12)
+
+    # 3dpassword generation
+    self._raw_password3d = ''.join(random.choice(string.digits) for _ in range(6))
+    self.set_password3d(self._raw_password3d)
+
+    # CVV Generation
+    self.cvv = ''.join(random.choice(string.digits) for _ in range(3))
+
+    # grid generation
+    key = 'A'
+    self._raw_grid = {}
+    self.grid = {}
+
+    for i in range(16):
+      rnd = ''.join(random.choice(string.digits) for _ in range(2))
+      self._raw_grid[key] = rnd
+      self.grid[key] = make_password(rnd)
+      key = chr(ord(key) + 1)
 
   def set_password3d(self, raw_password):
     self.password3d = make_password(raw_password)
@@ -80,9 +96,9 @@ class BankAccount(models.Model):
 
 
 def create_bank_account(sender, instance, created, **kwargs):
-    if created:
-      acc = BankAccount(user=instance)
-      acc.save()
-      create_pdf(acc)
+  if created:
+    acc = BankAccount(user=instance)
+    acc.save()
+    create_pdf(acc)
 
 signals.post_save.connect(create_bank_account, sender=User)
