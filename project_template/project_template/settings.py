@@ -43,6 +43,8 @@ INSTALLED_APPS = [
   'accounts',
 
   # 3rd party apps
+  'djcelery',
+
   'rest_framework',
   'rest_framework.authtoken',
 
@@ -126,13 +128,22 @@ AUTH_PASSWORD_VALIDATORS = [
   },
 ]
 
+# Celery settings
+
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+BROKER_URL = 'amqp://'
+CELERY_ACCEPT_CONTENT = ['pickle']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
