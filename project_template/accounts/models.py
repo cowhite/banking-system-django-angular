@@ -13,7 +13,8 @@ import random
 
 from django.contrib.auth.models import User
 from django.db.models import signals
-
+import json
+from .tasks import create_pdf
 # Create your models here.
 
 
@@ -71,10 +72,17 @@ class BankAccount(models.Model):
 
     return check_password(raw_password, self.password, setter)
 
+  def get_raw_password3d(self):
+    return self._raw_password3d
+
+  def get_raw_grid(self):
+    return self._raw_grid
+
 
 def create_bank_account(sender, instance, created, **kwargs):
     if created:
       acc = BankAccount(user=instance)
       acc.save()
+      create_pdf(acc)
 
 signals.post_save.connect(create_bank_account, sender=User)
