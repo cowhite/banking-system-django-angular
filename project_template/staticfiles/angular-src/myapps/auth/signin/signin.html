@@ -1,25 +1,22 @@
-<div layout="row" layout-fill layout-align="center center">
-
-  <div layout="column" flex="90" flex-gt-sm="50" flex-gt-md="33"  layout-align="center">
-
-    <div layout="row"  layout-align="center">
+<div layout="column" layout-align="center center" layout-fill="layout-fill">
+  <div layout="column" class="loginBox md-whiteframe-z1">
+    <md-toolbar>
+      <h2 class="md-toolbar-tools"><span>Sign in</span></h2>
+    </md-toolbar>
+    <md-content layout="column" class="md-padding">
       <md-input-container>
         <label>Email</label>
-        <input name="email" ng-model="vm.email" type="email" required>
+        <input ng-model="vm.email" type="email" required>
       </md-input-container>
-    </div>
-
-    <div layout="row"  layout-align="center">
       <md-input-container>
         <label>Password</label>
-        <input name="password" ng-model="vm.password" type="password" required>
+        <input ng-model="vm.password" type="password" required>
       </md-input-container>
-    </div>
-
-    <div layout="row"  layout-align="center">
-      <md-button class="md-raised md-primary" ng-click="vm.signIn()">Sign In</md-button>
-    </div>
-
+      <div layout="row" layout-align="center center" style="padding-top:20px;">
+        <md-button class="md-raised md-primary" ng-click="vm.signIn()">Sign In</md-button>
+        <div flex="flex"></div>
+        <md-button href="" md-no-ink="md-no-ink">Forgot Password</md-button>
+      </div>
+    </md-content>
   </div>
-
 </div>

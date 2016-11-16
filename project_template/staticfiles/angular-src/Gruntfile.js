@@ -1,12 +1,28 @@
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.renameTask('concat', 'concatsass');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-karma');
 
+
   grunt.initConfig({
+
+    concatsass:{
+      sass: {
+        src: [
+          'app.sass',
+          'myapps/*.sass',
+          'myapps/*/*.sass',
+          'myapps/*/*/*.sass'
+        ],
+        dest: 'css/app.sass'
+      }
+    },
+
     sass: {
       compile: {
         files: {
@@ -18,34 +34,34 @@ module.exports = function(grunt) {
     concat: {
       css: {
         src: [
-        'bower_components/angular-material/angular-material.min.css',
-        'css/app.css'
+          'bower_components/angular-material/angular-material.min.css',
+          'css/app.css'
         ],
         dest: 'dist/app.css'
       },
       libjs: {
         src: [
-        'bower_components/angular/angular.js',
-        'bower_components/angular-ui-router/release/angular-ui-router.js',
-        'node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
-        'bower_components/angular-animate/angular-animate.min.js',
-        'bower_components/angular-aria/angular-aria.min.js',
-        'bower_components/angular-messages/angular-messages.min.js',
-        'bower_components/angular-material/angular-material.min.js',
-        'bower_components/ngstorage/ngStorage.min.js',
-        'bower_components/angular-sanitize/angular-sanitize.min.js',
-        'bower_components/angular-svg-round-progressbar/build/roundProgress.js'
+          'bower_components/angular/angular.js',
+          'bower_components/angular-ui-router/release/angular-ui-router.js',
+          'node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
+          'bower_components/angular-animate/angular-animate.min.js',
+          'bower_components/angular-aria/angular-aria.min.js',
+          'bower_components/angular-messages/angular-messages.min.js',
+          'bower_components/angular-material/angular-material.min.js',
+          'bower_components/ngstorage/ngStorage.min.js',
+          'bower_components/angular-sanitize/angular-sanitize.min.js',
+          'bower_components/angular-svg-round-progressbar/build/roundProgress.js'
 
         ],
         dest: 'dist/vendor.js'
       },
       appjs: {
         src: [
-            'app.js',
-            'myapps/*.js',
-            'myapps/*/*.js',
-            'myapps/*/*/*.js',
-            '!Gruntfile.js'
+          'app.js',
+          'myapps/*.js',
+          'myapps/*/*.js',
+          'myapps/*/*/*.js',
+          '!Gruntfile.js'
         ],
         dest: 'dist/app.js'
       },
@@ -94,13 +110,14 @@ module.exports = function(grunt) {
       },
     },
     karma: {
-        unit: {
-            configFile: 'karma.conf.js',
-            singleRun: true
-        }
+      unit: {
+        configFile: 'karma.conf.js',
+        singleRun: true
+      }
     }
   });
   grunt.registerTask('default', [
+    'concatsass',
     'sass',
     'concat',
     'karma',
@@ -108,12 +125,14 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('nowatch', [
+    'concatsass',
     'sass',
     'concat',
     'karma'
   ]);
 
   grunt.registerTask('minify', [
+    'concatsass',
     'sass',
     'concat',
     'cssmin',
