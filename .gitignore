@@ -15,3 +15,5 @@ dist
 .sass-cache
 tmp
 .idea/
+/project_template/staticfiles/media/pdfs/*.pdf
+/project_template/static/media/pdfs/*.pdf
