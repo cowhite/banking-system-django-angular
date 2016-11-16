@@ -6,9 +6,11 @@ import string
 import random
 
 # Create your models here.
+from django.db.models import Count
 from django.utils import timezone
 
 from accounts.models import BankAccount
+from project_template.settings import SMS_OTP_VALIDITY_MINS
 
 TRANSACTION_STATUS = (
   (0, 'Initiated'),
@@ -20,9 +22,9 @@ TRANSACTION_STATUS = (
 
 TRANSFER_PROCESS_STATUS = (
   (0, 'Initiated'),
-  (1, 'Request Sent'),
-  (2, 'Timed out'),
-  (3, 'Successful'),
+  (1, 'Timed out'),
+  (2, 'Successful'),
+  (3, 'Invalid')
 )
 
 
@@ -83,6 +85,8 @@ class TransferProcess(models.Model):
   transaction = models.ForeignKey(Transaction)
   otp = models.CharField(max_length=128)
   grid_code = models.CharField(max_length=3)
+  status = models.IntegerField(choices=TRANSFER_PROCESS_STATUS, default=0)
+  valid_till = models.DateTimeField()
 
   created_at = models.DateTimeField(default=timezone.now)
   updated_at = models.DateTimeField(default=timezone.now)
@@ -109,6 +113,13 @@ class TransferProcess(models.Model):
 
     # grid code generation
     self.grid_code = ''.join(random.choice(string.ascii_uppercase) for _ in range(3))
+
+    # update validity
+    self.valid_till = timezone.now() + timezone.timedelta(minutes=SMS_OTP_VALIDITY_MINS)
+
+    # validate from account
+    if BankAccount.objects.aggregate(Count(number=self.transaction.from_account_number)) == 0:
+      self.status = 3
 
   def set_otp(self, raw_otp):
     self.otp = make_password(raw_otp)
@@ -139,4 +150,15 @@ class TransferProcess(models.Model):
 
     else:
       return False
+
+  def authenticate_transfer(self, raw_otp, raw_grid_code):
+    if timezone.now() < self.valid_till:
+      self.status = 1
+
+    if self.check_otp(raw_otp) and self.check_grid_code(raw_grid_code) and self.status == 0:
+      self.status = 2
+      self.transaction.transfer()
+
+    self.save()
+    return self
 
