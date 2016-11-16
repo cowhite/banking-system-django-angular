@@ -5,11 +5,8 @@
 .DS_Store
 .coverage
 local_settings.py
-/static
 fixtures.json
-/staticfiles/media
 /media
-media
 sa.json
 bower_components
 node_modules
