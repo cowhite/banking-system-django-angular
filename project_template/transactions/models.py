@@ -50,12 +50,31 @@ class Transaction(models.Model):
       update_fields=update_fields
     )
 
-  def abort(self):
+  def get_transfer_process(self):
+    try:
+      return TransferProcess.objects.get(transaction=self)
+    except models.Model.DoesNotExist:
+      return None
+
+  def initiate_transfer(self):
+    transfer_process = TransferProcess(transaction=self)
+    transfer_process.save()
+    return transfer_process
+
+  def decline(self):
     self.status = 1
     self.save()
     return self
 
+  def abort(self):
+    self.status = 2
+    self.save()
+    return self
+
   def transfer(self):
+    if self.status == 2:
+      raise Exception('This Transaction is aborted')
+
     try:
       from_acc = BankAccount.objects.get(number=self.from_account_number)
     except models.Model.DoesNotExist:
