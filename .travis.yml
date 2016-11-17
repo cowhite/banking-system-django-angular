@@ -7,7 +7,7 @@ install:
     - "pip install coverage coveralls"
 
 before_script:
-  - psql -c "CREATE USER cowhite WITH PASSWORD 'cowhite';" -U postgres
+  - psql -c "CREATE USER cowhite WITH PASSWORD 'cowhite' CREATEDB;" -U postgres
 
 script: coverage run project_template/manage.py test accounts transactions
 
