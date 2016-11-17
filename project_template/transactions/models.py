@@ -77,7 +77,6 @@ class Transaction(models.Model):
       to_acc.save()
 
     self.status = 3
-    self.save()
     return self
 
 
@@ -118,7 +117,7 @@ class TransferProcess(models.Model):
     self.valid_till = timezone.now() + timezone.timedelta(minutes=SMS_OTP_VALIDITY_MINS)
 
     # validate from account
-    if BankAccount.objects.aggregate(Count(number=self.transaction.from_account_number)) == 0:
+    if BankAccount.objects.filter(number=self.transaction.from_account_number).count() == 0:
       self.status = 3
 
   def set_otp(self, raw_otp):
@@ -152,7 +151,7 @@ class TransferProcess(models.Model):
       return False
 
   def authenticate_transfer(self, raw_otp, raw_grid_code):
-    if timezone.now() < self.valid_till:
+    if timezone.now() > self.valid_till:
       self.status = 1
 
     if self.check_otp(raw_otp) and self.check_grid_code(raw_grid_code) and self.status == 0:
@@ -161,4 +160,10 @@ class TransferProcess(models.Model):
 
     self.save()
     return self
+
+  def get_raw_otp(self):
+    if self._raw_otp:
+      return self._raw_otp
+    else:
+      return None
 

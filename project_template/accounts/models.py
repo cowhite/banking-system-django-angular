@@ -100,10 +100,16 @@ class BankAccount(models.Model):
     return check_password(raw_code, self.grid[char], setter)
 
   def get_raw_password3d(self):
-    return self._raw_password3d
+    if self._raw_password3d:
+      return self._raw_password3d
+    else:
+      return None
 
   def get_raw_grid(self):
-    return self._raw_grid
+    if self._raw_grid:
+      return self._raw_grid
+    else:
+      return None
 
 
 def create_bank_account(sender, instance, created, **kwargs):
