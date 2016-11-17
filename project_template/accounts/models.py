@@ -19,7 +19,7 @@ import json
 from phonenumber_field.modelfields import PhoneNumberField
 
 from project_template.settings import BANK_ACCOUNT_NUMBER_SEED
-from .tasks import create_pdf
+from .tasks import *
 # Create your models here.
 
 
@@ -53,7 +53,7 @@ class BankAccount(models.Model):
   def initialize_account(self):
     # Account Number generation
     prev_acc_num = BankAccount.objects.aggregate(max=Max('number'))['max']
-    if prev_acc_num == '':
+    if not prev_acc_num:
       prev_acc_num = BANK_ACCOUNT_NUMBER_SEED
     self.number = str(int(prev_acc_num) + 1).zfill(12)
 
@@ -116,6 +116,6 @@ def create_bank_account(sender, instance, created, **kwargs):
   if created:
     acc = BankAccount(user=instance)
     acc.save()
-    create_pdf(acc)
+    create_pdf.delay(acc.id)
 
 signals.post_save.connect(create_bank_account, sender=User)
