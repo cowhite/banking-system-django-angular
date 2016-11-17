@@ -107,7 +107,7 @@ DATABASES = {
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     'NAME': 'cowhitebanking',
     'USER': 'cowhite',
-    'PASSWORD': 'srinath@cowhite.com',
+    'PASSWORD': 'cowhite',
     'HOST': 'localhost',
     'PORT': '',
   }
