@@ -1,11 +1,16 @@
 language: python
 python:
   - "2.7"
+addons:
+  postgresql: "9.4"
 # Install dependencies
 install:
     - "pip install -r project_template/requirements.txt"
     - "pip install coverage coveralls"
 
-script: coverage run project_template/manage.py test app1 app2
+before_script:
+  - psql -c "CREATE USER cowhite WITH PASSWORD 'cowhite' CREATEDB;" -U postgres
+
+script: coverage run project_template/manage.py test accounts transactions
 
 after_success: coveralls

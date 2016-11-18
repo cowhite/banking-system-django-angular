@@ -7,6 +7,7 @@
 local_settings.py
 fixtures.json
 /media
+media
 sa.json
 bower_components
 node_modules

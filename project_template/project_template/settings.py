@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 
 
-import djcelery
+# import djcelery
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -47,7 +47,6 @@ INSTALLED_APPS = [
   'transactions',
 
   # 3rd party apps
-  'djcelery',
   'phonenumber_field',
 
   'rest_framework',
@@ -108,7 +107,7 @@ DATABASES = {
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     'NAME': 'cowhitebanking',
     'USER': 'cowhite',
-    'PASSWORD': 'srinath@cowhite.com',
+    'PASSWORD': 'cowhite',
     'HOST': 'localhost',
     'PORT': '',
   }
@@ -132,16 +131,6 @@ AUTH_PASSWORD_VALIDATORS = [
     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
   },
 ]
-
-# Celery settings
-djcelery.setup_loader()
-CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
-BROKER_URL = 'amqp://'
-CELERY_ACCEPT_CONTENT = ['pickle']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
