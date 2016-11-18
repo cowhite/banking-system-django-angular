@@ -14,7 +14,6 @@ import random
 
 from django.contrib.auth.models import User
 from django.db.models import signals
-import json
 
 from phonenumber_field.modelfields import PhoneNumberField
 

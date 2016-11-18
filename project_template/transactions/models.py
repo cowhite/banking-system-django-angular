@@ -6,7 +6,7 @@ import string
 import random
 
 # Create your models here.
-from django.db.models import Count
+from django.db.models import signals
 from django.utils import timezone
 
 from accounts.models import BankAccount
@@ -186,3 +186,9 @@ class TransferProcess(models.Model):
     else:
       return None
 
+
+def initiate_transfer_process_on_transaction_creation(sender, instance, created, **kwargs):
+  if created:
+    instance.initiate_transfer()
+
+signals.post_save.connect(initiate_transfer_process_on_transaction_creation, sender=Transaction)

@@ -23,4 +23,6 @@ urlpatterns = [
   url(r'^accounts/', include('allauth.urls')),
   url(r'^admin/', admin.site.urls),
   url(r'^$', TemplateView.as_view(template_name='index.html'), name="home"),
+
+  url(r'^transaction/', include('transactions.urls', namespace='transaction')),
 ]
