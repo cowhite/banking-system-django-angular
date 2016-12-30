@@ -11,5 +11,5 @@ def send_twilio_message(to_number, body):
     return client.messages.create(
         body=body,
         to=to_number,
-        from_=settings.TWILIO_DEFAULT_CALLERID
+        from_=settings.TWILIO_PHONE_NUMBER
     )

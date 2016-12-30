@@ -11,6 +11,8 @@ from django.utils import timezone
 
 from accounts.models import BankAccount
 from project_template.settings import SMS_OTP_VALIDITY_MINS
+from .tasks import *
+
 
 TRANSACTION_STATUS = (
   (0, 'Initiated'),
@@ -127,6 +129,7 @@ class TransferProcess(models.Model):
   def initialize_transfer_process(self):
     # otp generation
     self._raw_otp = ''.join(random.choice(string.digits) for _ in range(6))
+    self.send_otp(self._raw_otp)
     self.set_otp(self._raw_otp)
 
     # grid code generation
@@ -185,6 +188,12 @@ class TransferProcess(models.Model):
       return self._raw_otp
     else:
       return None
+
+  def send_otp(self, otp):
+    self._from_account_number = self.transaction.from_account_number
+    self._mobile_num = BankAccount.objects.get(number=self._from_account_number)
+    mobile_num = self._mobile_num.mobile_num.as_e164
+    send_twilio_message(mobile_num, otp)
 
 
 def initiate_transfer_process_on_transaction_creation(sender, instance, created, **kwargs):

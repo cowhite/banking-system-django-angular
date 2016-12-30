@@ -12,7 +12,6 @@ from django.utils import timezone
 import string
 import random
 
-from django.contrib.auth.models import User
 from django.db.models import signals
 
 from phonenumber_field.modelfields import PhoneNumberField
@@ -112,9 +111,10 @@ class BankAccount(models.Model):
 
 
 def create_bank_account(sender, instance, created, **kwargs):
-  if created:
-    acc = BankAccount(user=instance)
-    acc.save()
-    create_pdf.delay(acc.id)
+    if created:
+        acc = BankAccount(user=instance)
+        acc.save()
+        create_pdf.delay(acc.id)
+
 
 signals.post_save.connect(create_bank_account, sender=User)
