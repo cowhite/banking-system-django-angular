@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
   # 3rd party apps
   'phonenumber_field',
+  'django_twilio',
 
   'rest_framework',
   'rest_framework.authtoken',
@@ -181,3 +182,7 @@ SITE_ID = 1
 # Custom Variables
 BANK_ACCOUNT_NUMBER_SEED = '500000000000'
 SMS_OTP_VALIDITY_MINS = 30
+
+TWILIO_ACCOUNT_SID = 'ACdbb8803eca384d78438fb87cb9855862'
+TWILIO_AUTH_TOKEN = '7b22896f39181632c216d085833a2334'
+TWILIO_DEFAULT_CALLERID = '+14804625940'
