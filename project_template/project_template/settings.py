@@ -45,6 +45,7 @@ INSTALLED_APPS = [
   # custom apps
   'accounts',
   'transactions',
+  'bankbranch',
 
   # 3rd party apps
   'phonenumber_field',

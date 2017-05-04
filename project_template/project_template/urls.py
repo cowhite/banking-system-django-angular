@@ -25,4 +25,5 @@ urlpatterns = [
   url(r'^$', TemplateView.as_view(template_name='index.html'), name="home"),
 
   url(r'^transaction/', include('transactions.urls', namespace='transaction')),
+  url(r'^branches/', include('bankbranch.urls', namespace='branches')),
 ]
