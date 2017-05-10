@@ -38,7 +38,6 @@ librabbitmq==1.0.3
 lockfile==0.8
 lxml==3.3.3
 mailer==0.7
-MySQL-python==1.2.3
 nltk==3.2.1
 oauthlib==0.6.1
 packaging==16.8
@@ -51,7 +50,6 @@ phonenumberslite==7.7.4
 pickleshare==0.7.4
 Pillow==2.3.0
 piston-mini-client==0.7.5
-pkg-resources==0.0.0
 prompt-toolkit==1.0.9
 psutil==1.2.1
 psycopg2==2.6.2
@@ -64,7 +62,6 @@ PyJWT==1.5.0
 pymongo==3.3.1
 PyOpenGL==3.0.2
 pyOpenSSL==17.0.0
-pyparsing==2.0.1
 pyserial==2.6
 python-dateutil==1.5
 python-memcached==1.53
