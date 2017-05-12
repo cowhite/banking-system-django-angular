@@ -1,30 +1,31 @@
 (function () {
-  angular.module('appBase', [
-    'ui.router',
-    'ngMessages',
-    'ngMaterial',
-    'ngStorage',
+    angular.module('appBase', [
+        'ui.router',
+        'ngMessages',
+        'ngMaterial',
+        'ngStorage',
 
-    // Custom modules
-    'auth'
+        // Custom modules
+        'auth',
+        'branch'
 
-  ])
+    ])
 
-    .config([
-      '$stateProvider',
-      '$urlRouterProvider',
-      '$httpProvider',
-      function (
-        $stateProvider,
-        $urlRouterProvider,
-        $httpProvider
-      ) {
+        .config([
+            '$stateProvider',
+            '$urlRouterProvider',
+            '$httpProvider',
+            function (
+                $stateProvider,
+                $urlRouterProvider,
+                $httpProvider
+            ) {
 
-        $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+                $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+                $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 
-        $urlRouterProvider.otherwise('/');
-      }
-    ]);
+                $urlRouterProvider.otherwise('/');
+            }
+        ]);
 })();

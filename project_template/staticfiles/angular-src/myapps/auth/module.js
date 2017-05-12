@@ -16,7 +16,7 @@
         $stateProvider
           .state('signup', {
             url: "/auth/signup",
-            templateUrl: "/static/angular-src/myapps/auth/signup/signup.html",
+            templateUrl: "/static/angular-src/myapps/auth/signup/list.html",
             controller: 'SignUpController as vm',
             data: {
               loginRequired: false

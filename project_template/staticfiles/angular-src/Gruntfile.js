@@ -41,21 +41,41 @@ module.exports = function(grunt) {
                 },
                 mainFiles: {
                     'angular-ui-router': ['release/angular-ui-router.js'],
-                }
+                    'angular-datatables': ['bundles/angular-datatables.umd.js']
+                },
+
+                dependencies: {
+                    'angular-material': 'angular-ui-router'
+                },
+                exclude:[
+                ]
+
             }
         },
 
         concat: {
             css: {
                 src: [
-                    'bower_components/style.css',
+                    'bower_components/angular-material/angular-material.min.css',
                     'css/app.css'
                 ],
                 dest: 'dist/app.css'
             },
             libjs: {
                 src: [
-                    'bower_components/vendor.js'
+                    'bower_components/jquery/dist/jquery.js',
+                    'bower_components/datatables/media/js/jquery.dataTables.js',
+                    'bower_components/angular/angular.js',
+                    'bower_components/angular-ui-router/release/angular-ui-router.js',
+                    'node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
+                    'bower_components/angular-animate/angular-animate.min.js',
+                    'bower_components/angular-aria/angular-aria.min.js',
+                    'bower_components/angular-messages/angular-messages.min.js',
+                    'bower_components/angular-material/angular-material.min.js',
+                    'bower_components/ngstorage/ngStorage.min.js',
+                    'bower_components/angular-sanitize/angular-sanitize.min.js',
+                    'bower_components/angular-svg-round-progressbar/build/roundProgress.js',
+                    'bower_components/angular-datatables/bundles/angular-datatables.umd.js'
 
                 ],
                 dest: 'dist/vendor.js'
@@ -66,11 +86,10 @@ module.exports = function(grunt) {
                     'myapps/*.js',
                     'myapps/*/*.js',
                     'myapps/*/*/*.js',
-
                     '!Gruntfile.js'
                 ],
                 dest: 'dist/app.js'
-            }
+            },
         },
         cssmin: {
             options: {
@@ -140,7 +159,7 @@ module.exports = function(grunt) {
     grunt.registerTask('minify', [
         'concatsass',
         'sass',
-        'bower_concat',
+        // 'bower_concat',
         'concat',
         'cssmin',
         //'uglify'
