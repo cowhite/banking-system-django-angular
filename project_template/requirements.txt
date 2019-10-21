@@ -43,7 +43,7 @@ librabbitmq==1.0.3
 lockfile==0.8
 lxml==3.3.3
 mailer==0.7
-nltk==3.2.1
+nltk==3.4.5
 oauthlib==0.6.1
 oneconf==0.3.7.14.04.1
 parsedatetime==2.1
