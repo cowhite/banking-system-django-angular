@@ -1,5 +1,5 @@
 BeautifulSoup==3.2.1
-Django==1.6.11
+Django==1.11.28
 MySQL-python==1.2.3
 PAM==0.4.2
 Pillow==2.3.0
