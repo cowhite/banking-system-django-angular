@@ -50,7 +50,7 @@ parsedatetime==2.1
 pbr==1.10.0
 pexpect==3.1
 piston-mini-client==0.7.5
-psutil==1.2.1
+psutil==5.6.6
 pyOpenSSL==0.13
 pyasn1==0.1.7
 pycrypto==2.6.1
