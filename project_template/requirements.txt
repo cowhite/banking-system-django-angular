@@ -5,7 +5,7 @@ PAM==0.4.2
 Pillow==2.3.0
 PyOpenGL==3.0.2
 PyYAML==3.10
-Pygments==1.6
+Pygments==2.7.4
 Pyrex==0.9.8.5
 Twisted-Conch==13.2.0
 Twisted-Core==13.2.0
