@@ -76,7 +76,7 @@ software-center-aptd-plugins==0.0.0
 stevedore==1.17.1
 system-service==0.1.6
 unity-lens-photos==1.0
-urllib3==1.7.1
+urllib3==1.26.5
 virtualenv==15.0.3
 virtualenv-clone==0.2.6
 virtualenvwrapper==4.7.2
