@@ -20,7 +20,7 @@ argparse==1.2.1
 beautifulsoup4==4.5.1
 billiard==3.3.0.15
 boto==2.20.1
-celery==3.1.6
+celery==5.2.2
 chardet==2.0.1
 cl==0.0.3
 colorama==0.2.5
