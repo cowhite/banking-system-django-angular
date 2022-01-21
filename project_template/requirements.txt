@@ -37,7 +37,7 @@ gyp==0.1
 html5lib==0.999
 httplib2==0.8
 ipdb==0.10.1
-ipython==1.2.1
+ipython==7.16.3
 kombu==3.0.7
 librabbitmq==1.0.3
 lockfile==0.8
