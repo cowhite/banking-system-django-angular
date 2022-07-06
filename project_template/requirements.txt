@@ -34,7 +34,7 @@ gevent==1.1.2
 greenlet==0.4.10
 guppy==0.1.9
 gyp==0.1
-html5lib==0.999
+html5lib==0.999999999
 httplib2==0.8
 ipdb==0.10.1
 ipython==1.2.1
