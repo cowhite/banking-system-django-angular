@@ -67,7 +67,7 @@ python-memcached==1.53
 pytz==2012c
 pyxdg==0.25
 reportlab==3.0
-requests==2.2.1
+requests==2.20.0
 selenium==3.0.1
 sessioninstaller==0.0.0
 simplegeneric==0.8.1
